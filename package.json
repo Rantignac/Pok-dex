@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/Rantignac/Pokedex/issues"
   },
-  "homepage": "https://github.com/Rantignac/Pokedex#readme"
+  "homepage": "https://github.com/Rantignac/Pokedex#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.5.12",
+    "nunjucks": "^3.2.0"
+  }
 }
