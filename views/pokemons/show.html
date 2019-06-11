@@ -3,16 +3,20 @@
 {% block content %}
 <div class="row">
     <div class="col-sm-3">
-
+        <img src="/uplaods/{{ pokemon.picture }}" alt="{{ pokemon.name }}" style="width: 100%">
     </div>
     <div class="col-sm-9">
         <h2>{{ pokemon.name }} <small>Pokémon n°{{ pokemon.number }}</small></h2>
+        <a href="/edit/{{ pokemon._id }}" class="btn btn-light">Editer</a>
+        <a href="/delete/{{ pokemon._id }}" class="btn btn-danger">Supprimer</a>
+        <hr>
         <p class="lead">
             {{ pokemon.description }}
         </p>
         <h3>Types :</h3>
         {% for t in pokemon.types %}
-        <span style="background-color: {{ t.color }}" class="badge badge-secondary"> {{ t.name }} </span>
+        <a href="/types/{{t.name}}" style="background-color: {{ t.color }}" class="badge badge-secondary"> {{ t.name }}
+        </a>
         {% endfor %}
     </div>
 

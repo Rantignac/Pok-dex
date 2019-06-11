@@ -15,7 +15,8 @@ router.get('/new', (req, res) => {
         var pokemon = new Pokemon();
         res.render('pokemons/edit.html', {
             pokemon: pokemon,
-            types: types
+            types: types,
+            endpoint: '/'
         });
     });
 });
@@ -25,10 +26,18 @@ router.get('/edit/:id', (req, res) => {
         Pokemon.findById(req.params.id).then(pokemon => {
             res.render('pokemons/edit.html', {
                 pokemon: pokemon,
-                types: types
+                types: types,
+                endpoint: '/' + pokemon._id.toString()
             });
         });
     });
+});
+
+router.get('/delete/:id', (req, res) => {
+    Pokemon.findOneAndRemove({ _id: req.params.id }).then(() => {
+        res.redirect('/');
+    });
+
 });
 
 router.get('/:id', (req, res) => {
@@ -38,6 +47,31 @@ router.get('/:id', (req, res) => {
             });
         }),
         err => res.status(500).send(err);
+});
+
+
+
+router.post('/:id?', (req, res) => {
+    new Promise((reslove, reject) => {
+        if(req.params.id) {
+            Pokemon.findById(req.params.id).then(reslove, reject);
+        } 
+        else {
+            reslove(new Pokemon())
+        }
+    }).then(pokemon => {
+        pokemon.name = req.body.name;
+        pokemon.description = req.body.description;
+        pokemon.number = req.body.number;
+        pokemon.types = req.body.types;
+
+        if (req.file) pokemon.picture = req.file.filename;
+        
+        return pokemon.save();
+
+        }).then(() => {
+            res.redirect('/');
+        })
 });
 
 module.exports = router;
